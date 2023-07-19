@@ -1,9 +1,6 @@
 package co.com.jperez;
 
-import co.com.jperez.models.Currency;
-import co.com.jperez.services.ConverterService;
-
-import java.util.Scanner;
+import co.com.jperez.controllers.ConverterController;
 
 /**
  * @author JPerez
@@ -14,7 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        ConverterController controller = new ConverterController();
+        controller.menu();
 
     }
 

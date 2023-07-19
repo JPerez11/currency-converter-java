@@ -1,6 +1,8 @@
 package co.com.jperez.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CurrencyConstants {
@@ -22,6 +24,7 @@ public class CurrencyConstants {
     public static final String EUR_SYMBOL = "€";
 
     public static final Map<String, Double> CURRENCY_MAP;
+    public static final List<String> CURRENCY_LIST;
 
     private CurrencyConstants() {}
 
@@ -33,6 +36,11 @@ public class CurrencyConstants {
         CURRENCY_MAP.put(EUR_COP_KEY, EUR_COP_VALUE);
         CURRENCY_MAP.put(USD_EUR_KEY, USD_EUR_VALUE);
         CURRENCY_MAP.put(EUR_USD_KEY, EUR_USD_VALUE);
+
+        CURRENCY_LIST = new ArrayList<>();
+        CURRENCY_LIST.add(CurrencyEnum.COP.name());
+        CURRENCY_LIST.add(CurrencyEnum.USD.name());
+        CURRENCY_LIST.add(CurrencyEnum.EUR.name());
     }
 
 }
