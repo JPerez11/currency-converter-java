@@ -19,9 +19,12 @@ public class CurrencyConstants {
     public static final double USD_EUR_VALUE = 0.8904;
     public static final String EUR_USD_KEY = "EUR TO USD";
     public static final double EUR_USD_VALUE = 1.1227;
-    public static final String COP_SYMBOL = "$";
-    public static final String USD_SYMBOL = "$";
-    public static final String EUR_SYMBOL = "€";
+    public static final String DOLLAR_SYMBOL = "$";
+    public static final String EURO_SYMBOL = "€";
+
+    public static final String COP = "COP";
+    public static final String USD = "USD";
+    public static final String EUR = "EUR";
 
     public static final Map<String, Double> CURRENCY_MAP;
     public static final List<String> CURRENCY_LIST;
@@ -38,9 +41,9 @@ public class CurrencyConstants {
         CURRENCY_MAP.put(EUR_USD_KEY, EUR_USD_VALUE);
 
         CURRENCY_LIST = new ArrayList<>();
-        CURRENCY_LIST.add(CurrencyEnum.COP.name());
-        CURRENCY_LIST.add(CurrencyEnum.USD.name());
-        CURRENCY_LIST.add(CurrencyEnum.EUR.name());
+        CURRENCY_LIST.add(COP);
+        CURRENCY_LIST.add(USD);
+        CURRENCY_LIST.add(EUR);
     }
 
 }

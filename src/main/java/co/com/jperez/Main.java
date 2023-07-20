@@ -1,6 +1,7 @@
 package co.com.jperez;
 
 import co.com.jperez.controllers.ConverterController;
+import co.com.jperez.services.ConverterService;
 
 /**
  * @author JPerez
@@ -11,7 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ConverterController controller = new ConverterController();
+        ConverterService service = new ConverterService();
+        ConverterController controller = new ConverterController(service);
         controller.menu();
 
     }

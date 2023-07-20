@@ -2,7 +2,7 @@ package co.com.jperez.services;
 
 import co.com.jperez.models.Currency;
 
-import static co.com.jperez.utils.CurrencyConstants.CURRENCY_MAP;
+import static co.com.jperez.utils.CurrencyConstants.*;
 
 public class ConverterService {
 
@@ -11,8 +11,13 @@ public class ConverterService {
         String key = currency.getActual() +
                 " TO " +
                 currency.getExpected();
+        double conversionValue = 0;
+        try {
+            conversionValue = CURRENCY_MAP.get(key);
 
-        double conversionValue = CURRENCY_MAP.get(key);
+        } catch (NullPointerException e) {
+            JOptionPaneService.getJOptionPaneError();
+        }
 
         double result = currency.getAmount() * conversionValue;
 
@@ -20,6 +25,14 @@ public class ConverterService {
                 " " +
                 result;
 
+    }
+
+    public String symbolConverted(String currencyType) {
+        switch (currencyType) {
+            case COP, USD -> { return DOLLAR_SYMBOL; }
+            case EUR -> { return EURO_SYMBOL; }
+            default -> { return null; }
+        }
     }
 
 }

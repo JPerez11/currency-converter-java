@@ -9,6 +9,11 @@ import javax.swing.*;
 public class ConverterController {
 
     private boolean keep = true;
+    private final ConverterService service;
+
+    public ConverterController(ConverterService service) {
+        this.service = service;
+    }
 
     public void menu() {
         do {
@@ -20,7 +25,7 @@ public class ConverterController {
     public void keepConvert() {
         int option = JOptionPaneService.getJOptionPaneToKeepApp();
         switch (option) {
-            case 0 -> requestCurrency();
+            case 0 -> keep = true;
             case 1, 2 -> keep = false;
             default -> JOptionPaneService.getJOptionPaneError();
         }
@@ -38,14 +43,15 @@ public class ConverterController {
 
         double currencyAmount = JOptionPaneService.getJOptionPaneAmount();
 
+        String symbol = service.symbolConverted(currencyConverted);
+
         Currency currency = new Currency(
                 currencyToConvert,
                 currencyConverted,
-                "$",
+                symbol,
                 currencyAmount
         );
 
-        ConverterService service = new ConverterService();
         JOptionPane.showMessageDialog(null, service.convertCurrency(currency));
 
     }
