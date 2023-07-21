@@ -1,16 +1,17 @@
 package co.com.jperez.models;
 
-public class Currency {
+public class ConversionModel {
 
     private String actual;
-    private String expected;
+    private String target;
     private String symbol;
     private double amount;
+    private double result;
 
-    public Currency() {}
-    public Currency(String actual, String expected, String symbol, double amount) {
+    public ConversionModel() {}
+    public ConversionModel(String actual, String target, String symbol, double amount) {
         this.actual = actual;
-        this.expected = expected;
+        this.target = target;
         this.symbol = symbol;
         this.amount = amount;
     }
@@ -23,12 +24,12 @@ public class Currency {
         this.actual = actual;
     }
 
-    public String getExpected() {
-        return expected;
+    public String getTarget() {
+        return target;
     }
 
-    public void setExpected(String expected) {
-        this.expected = expected;
+    public void setTarget(String target) {
+        this.target = target;
     }
 
     public String getSymbol() {
@@ -45,5 +46,13 @@ public class Currency {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double result) {
+        this.result = result;
     }
 }

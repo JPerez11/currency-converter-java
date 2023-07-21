@@ -1,8 +1,11 @@
 package co.com.jperez.controllers;
 
-import co.com.jperez.models.Currency;
+import co.com.jperez.models.ConversionModel;
 import co.com.jperez.services.ConverterService;
 import co.com.jperez.services.JOptionPaneService;
+import co.com.jperez.utils.CurrencyConstants;
+import co.com.jperez.utils.DistanceConstants;
+import co.com.jperez.utils.GlobalConstants;
 
 import javax.swing.*;
 
@@ -17,8 +20,13 @@ public class ConverterController {
 
     public void menu() {
         do {
-            requestCurrency();
-            keepConvert();
+            try {
+                conversionOptions();
+                keepConvert();
+            } catch (NullPointerException e) {
+                keep = false;
+                JOptionPaneService.getJOptionPaneFinish();
+            }
         } while (keep);
     }
 
@@ -26,33 +34,61 @@ public class ConverterController {
         int option = JOptionPaneService.getJOptionPaneToKeepApp();
         switch (option) {
             case 0 -> keep = true;
-            case 1, 2 -> keep = false;
-            default -> JOptionPaneService.getJOptionPaneError();
+            case -1, 1, 2 -> { keep = false; JOptionPaneService.getJOptionPaneFinish(); }
+            default -> JOptionPaneService.getJOptionPaneError(GlobalConstants.SELECTED_OPTION_EXCEPTION_MESSAGE);
         }
 
     }
 
-    public void requestCurrency() {
-        String currencyToConvert = JOptionPaneService.getJOptionSelectCurrency(
-                "Select the initial currency type",
-                "Initial currency");
+    public void conversionOptions() {
+        String option = JOptionPaneService.getJOptionPaneConversionOptions();
+        switch (option) {
+            case GlobalConstants.CURRENCY_OPTION ->
+                    requestConvert(CurrencyConstants.CURRENCY_LIST.toArray(), option);
+            case GlobalConstants.DISTANCE_OPTION ->
+                    requestConvert(DistanceConstants.DISTANCE_LIST.toArray(), option);
+            default -> JOptionPaneService.getJOptionPaneError(GlobalConstants.SELECTED_OPTION_EXCEPTION_MESSAGE);
+        }
+    }
 
-        String currencyConverted = JOptionPaneService.getJOptionSelectCurrency(
-                "Select the type of currency to convert",
-                "Target currency");
+    public void requestConvert(Object[] options, String optionSelected) {
+        String actual = JOptionPaneService.getJOptionSelectConversion(
+                GlobalConstants.ACTUAL_MESSAGE,
+                GlobalConstants.ACTUAL_TITLE,
+                options);
 
-        double currencyAmount = JOptionPaneService.getJOptionPaneAmount();
+        if (actual == null) {
+            throw new NullPointerException();
+        }
 
-        String symbol = service.symbolConverted(currencyConverted);
+        String target = JOptionPaneService.getJOptionSelectConversion(
+                GlobalConstants.TARGET_MESSAGE,
+                GlobalConstants.TARGET_TITLE,
+                options);
 
-        Currency currency = new Currency(
-                currencyToConvert,
-                currencyConverted,
+        if (target == null) {
+            throw new NullPointerException();
+        }
+
+        double amount = 0;
+
+        try {
+            amount = JOptionPaneService.getJOptionPaneAmount();
+        } catch (NumberFormatException e) {
+            JOptionPaneService.getJOptionPaneError(GlobalConstants.NUMBER_EXCEPTION_MESSAGE);
+        }
+
+        String symbol = service.symbolConverted(target);
+
+        ConversionModel conversionModel = new ConversionModel(
+                actual,
+                target,
                 symbol,
-                currencyAmount
+                amount
         );
 
-        JOptionPane.showMessageDialog(null, service.convertCurrency(currency));
+        JOptionPane.showMessageDialog(null,
+                service.getConversionResult(conversionModel, optionSelected));
 
     }
 

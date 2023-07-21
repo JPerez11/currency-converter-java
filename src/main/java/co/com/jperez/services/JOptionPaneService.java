@@ -1,12 +1,24 @@
 package co.com.jperez.services;
 
-import javax.swing.*;
+import co.com.jperez.utils.GlobalConstants;
 
-import static co.com.jperez.utils.CurrencyConstants.CURRENCY_LIST;
+import javax.swing.*;
 
 public class JOptionPaneService {
 
     private JOptionPaneService() {}
+
+    public static String getJOptionPaneConversionOptions() {
+        return (String) JOptionPane.showInputDialog(
+                null,
+                GlobalConstants.CONVERSION_OPTIONS_MESSAGE,
+                GlobalConstants.CONVERSION_OPTIONS_TITLE,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                GlobalConstants.CONVERSION_OPTIONS_LIST.toArray(),
+                GlobalConstants.CONVERSION_OPTIONS_LIST.get(0)
+        );
+    }
 
     public static int getJOptionPaneToKeepApp() {
         return JOptionPane.showConfirmDialog(
@@ -17,29 +29,29 @@ public class JOptionPaneService {
         );
     }
 
-    public static void getJOptionPaneError() {
+    public static void getJOptionPaneError(String message) {
         JOptionPane.showMessageDialog(
                 null,
-                "Selection error",
+                message,
                 "Error",
                 JOptionPane.ERROR_MESSAGE
         );
     }
 
-    public static String getJOptionSelectCurrency(String message, String title) {
+    public static String getJOptionSelectConversion(String message, String title, Object[] options) {
         return (String) JOptionPane.showInputDialog(
                 null,
                 message,
                 title,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
-                CURRENCY_LIST.toArray(),
-                CURRENCY_LIST.get(0)
+                options,
+                options[0]
         );
     }
 
-    public static int getJOptionPaneAmount() {
-        return Integer.parseInt(JOptionPane.showInputDialog(
+    public static double getJOptionPaneAmount() {
+        return Double.parseDouble(JOptionPane.showInputDialog(
                 null,
                 "Enter the amount to convert",
                 "Amount to convert",
@@ -47,4 +59,12 @@ public class JOptionPaneService {
         ));
     }
 
+    public static void getJOptionPaneFinish() {
+        JOptionPane.showMessageDialog(
+                null,
+                "Finished program",
+                "Goodbye!",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
 }
